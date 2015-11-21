@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="edu.lmu.bfs.ase2.model.Task" table="task">
+		<meta attribute="class-description">
+		   This class contains the task records. 
+		</meta>
+        <id name="taskId" type="java.lang.Integer">
+            <column name="task_id" />
+            <generator class="increment" />
+        </id>
+        <!--<many-to-one name="productOwner" class="edu.lmu.bfs.ase2.model.User" fetch="select">
+            <column name="task_assigned_to" not-null="true" />
+        </many-to-one>-->
+        <many-to-one name="userStory" class="edu.lmu.bfs.ase2.model.UserStory"  fetch="select">
+            <column name="task_user_story_id"  not-null="true" />
+        </many-to-one>
+        <property name="name" type="string">
+            <column name="task_name" not-null="true" />
+        </property>
+        <property name="description" type="string">
+            <column name="task_description" length="2000" not-null="true" />
+        </property>
+        <property name="estimate" type="int">
+            <column name="task_estimate" not-null="true" />
+        </property>
+        <property name="status" type="string">
+            <column name="task_status" length="40" not-null="true" />
+        </property>
+		<!-- <set name="taskProgressSet" table="task_progress" cascade="all" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="task_id" not-null="true" />
+            </key>
+            <one-to-many class="edu.lmu.bfs.ase2.model.TaskProgress" />
+        </set>-->
+    </class>
+</hibernate-mapping>

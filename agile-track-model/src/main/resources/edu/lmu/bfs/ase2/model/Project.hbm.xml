@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="edu.lmu.bfs.ase2.model.Project" table="project">
+		<meta attribute="class-description">
+		   This class contains the project records. 
+		</meta>
+        <id name="id" type="java.lang.Integer">
+            <column name="project_id" />
+            <generator class="increment" />
+        </id>
+       
+        <property name="name" type="string">
+            <column name="project_name" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

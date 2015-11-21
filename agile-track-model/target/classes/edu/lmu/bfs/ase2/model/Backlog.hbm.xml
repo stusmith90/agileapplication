@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="edu.lmu.bfs.ase2.model.Backlog" table="BACKLOG">
+		<meta attribute="class-description">
+			This class is a base class extended by
+			productBacklog and sprintBacklog classes.
+		</meta>
+		<id name="id" type="java.lang.Integer">
+			<column name="backlog_id" />
+			<generator class="increment" />
+		</id>
+		<discriminator column="backlog_type" type="string" />
+		<property name="projectId" type="java.lang.Integer">
+			<column name="project_id" />
+		</property>
+		<property name="name" type="java.lang.String">
+			<column name="NAME" not-null="false" />
+		</property>
+		<bag name="userStories" table="user_story" cascade="all"
+			inverse="true" lazy="false" fetch="select">
+			<key column="backlog_id" not-null="true" />
+			<one-to-many class="edu.lmu.bfs.ase2.model.UserStory" />
+		</bag>
+		
+		<subclass name="edu.lmu.bfs.ase2.model.ProductBacklog"
+			discriminator-value="edu.lmu.bfs.ase2.model.ProductBacklog">
+			<meta attribute="class-description">
+				This class extends Backlog class.
+			</meta>
+		</subclass>
+		<subclass name="edu.lmu.bfs.ase2.model.SprintBacklog"
+			discriminator-value="edu.lmu.bfs.ase2.model.SprintBacklog">
+			<meta attribute="class-description">
+				This class extends Backlog class.
+			</meta>
+			<property name="startDate" type="java.util.Calendar">
+				<column name="start_date" not-null="false" />
+			</property>
+			<property name="endDate" type="java.util.Calendar">
+				<column name="end_date" not-null="false" />
+			</property>
+		</subclass>
+		
+	</class>
+	
+	<query name="getSprintBacklogByProjectID">
+        <![CDATA[from SprintBacklog 
+        		 where projectId  = :projectId]]>
+    </query>
+	<query name="getProductBacklogByProjectID">
+        <![CDATA[from ProductBacklog 
+        		 where projectId  = :projectId]]>
+    </query>
+</hibernate-mapping>

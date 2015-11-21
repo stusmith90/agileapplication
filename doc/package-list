@@ -1,0 +1,7 @@
+edu.lmu.bfs.ase2.dao
+edu.lmu.bfs.ase2.dao.impl
+edu.lmu.bfs.ase2.model
+edu.lmu.bfs.ase2.service
+edu.lmu.bfs.ase2.swing
+edu.lmu.bfs.ase2.swing.backlog
+edu.lmu.bfs.ase2.swing.gui

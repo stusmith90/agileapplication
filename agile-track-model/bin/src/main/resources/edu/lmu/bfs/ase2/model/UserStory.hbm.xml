@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="edu.lmu.bfs.ase2.model.UserStory" table="user_story">
+		<meta attribute="class-description">
+		   This class contains the user story records. 
+		</meta>
+        <id name="id" type="java.lang.Integer">
+            <column name="user_story_id" />
+            <generator class="increment" />
+        </id>
+        <!--<many-to-one name="productOwner" class="edu.lmu.bfs.ase2.model.User" fetch="select">
+            <column name="product_owner" />
+        </many-to-one>-->
+        <many-to-one name="productBacklog" class="edu.lmu.bfs.ase2.model.Backlog" fetch="select">
+            <column name="backlog_id" />
+        </many-to-one>
+        <property name="priority" type="int">
+            <column name="priority" not-null="true"/>
+        </property>
+        <property name="title" type="string">
+            <column name="title" not-null="true" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="2000" not-null="true" />
+        </property>
+        <property name="acceptanceCriteria" type="string">
+            <column name="acceptance_criteria" length="2000" not-null="true" />
+        </property>
+        <property name="storyPointEstimate" type="int">
+            <column name="story_point_estimate" not-null="true" />
+        </property>
+		<set name="taskSet" table="task" inverse="true" lazy="true" fetch="select"  cascade="all-delete-orphan">
+            <key>
+                <column name="task_user_story_id" not-null="true" />
+            </key>
+            <one-to-many class="edu.lmu.bfs.ase2.model.Task" />
+        </set>
+    </class>
+</hibernate-mapping>

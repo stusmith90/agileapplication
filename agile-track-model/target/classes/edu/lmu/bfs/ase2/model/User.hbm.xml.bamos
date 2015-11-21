@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 16-Nov-2013 01:53:54 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="edu.lmu.bfs.ase2.model.User" table="user">
+		<meta attribute="class-description">
+		   This class contains the user records. 
+		</meta>
+        <id name="userId" type="java.lang.Integer">
+            <column name="user_id" />
+            <generator class="identity" />
+        </id>
+        <property name="userName" type="string">
+            <column name="user_name" length="20" not-null="true" />
+        </property>
+        <property name="userPassword" type="string">
+            <column name="user_password" not-null="true" />
+        </property>
+        <property name="userFullName" type="string">
+            <column name="user_full_name" not-null="true" />
+        </property>
+        <property name="userRole" type="string">
+            <column name="user_role" length="40" not-null="true" />
+        </property>
+        <!-- <set name="taskProgressSet" table="task_progress" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="user_id" not-null="true" />
+            </key>
+            <one-to-many class="edu.lmu.bfs.ase2.model.TaskProgress" />
+        </set>-->
+        <set name="userStorySet" table="user_story" cascade="all" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="product_owner" />
+            </key>
+            <one-to-many class="edu.lmu.bfs.ase2.model.UserStory" />
+        </set>
+        <set name="taskSet" table="task" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="task_assigned_to" not-null="true" />
+            </key>
+            <one-to-many class="edu.lmu.bfs.ase2.model.Task" />
+        </set>
+    </class>
+</hibernate-mapping>

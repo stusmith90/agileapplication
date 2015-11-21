@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="edu.lmu.bfs.ase2.model.User" table="USER">
+		<meta attribute="class-description">
+		   This class contains the user records. 
+		</meta>
+        <id name="id" type="java.lang.Integer">
+            <column name="USER_ID" />
+            <generator class="increment" />
+        </id>
+        <discriminator column="ROLE" type="string"/>
+		
+		<property name="username" type="string">
+            <column name="USERNAME" length="20" not-null="true" />
+        </property>
+        <property name="password" type="string">
+            <column name="PASSWORD" not-null="true" />
+        </property>
+        <property name="name" type="string">
+            <column name="NAME" />
+        </property>
+        
+		<subclass name="edu.lmu.bfs.ase2.model.TeamMember" discriminator-value="edu.lmu.bfs.ase2.model.TeamMember"/>
+		<subclass name="edu.lmu.bfs.ase2.model.ProductOwner" discriminator-value="edu.lmu.bfs.ase2.model.ProductOwner"/>
+		<subclass name="edu.lmu.bfs.ase2.model.SystemAdmin" discriminator-value="edu.lmu.bfs.ase2.model.SystemAdmin"/>
+		
+    </class>
+    
+    <query name="getUserByUsername">
+        <![CDATA[from User u
+        		 where u.username  = :username]]>
+    </query>
+
+    <query name="getUsersByRole">
+        <![CDATA[from User u
+        		 where role  = :role]]>
+    </query>
+
+
+</hibernate-mapping>

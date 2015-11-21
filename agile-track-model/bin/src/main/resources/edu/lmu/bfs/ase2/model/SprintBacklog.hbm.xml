@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+ 
+<hibernate-mapping>
+    <class name="edu.lmu.bfs.ase2.model.SprintBacklog" table="BACKLOG">
+        <id name="id" type="java.lang.Integer" unsaved-value="null">
+            <column name="BACKLOG_ID" />
+            <generator class="increment" />
+        </id>
+        <property name="backlogType" type="string">
+            <column name="BACKLOG_TYPE" not-null="true" />
+        </property>
+        <property name="name" type="string">
+            <column name="NAME" not-null="true" />
+        </property>
+        <property name="projectId" type="integer">
+            <column name="PROJECT_ID" not-null="true" />
+        </property>
+        <property name="startDate" type="calendar">
+            <column name="START_DATE" not-null="true" />
+        </property>
+        <property name="endDate" type="calendar">
+            <column name="END_DATE" not-null="true" />
+        </property>
+    </class>
+    
+    <query name="getSprintBacklogByProjectID">
+        <![CDATA[from SprintBacklog b 
+        		 where b.backlogType = 'edu.lmu.bfs.ase2.model.SprintBacklog'
+        		 and   b.projectId  = :projectId]]>
+    </query>
+</hibernate-mapping>
